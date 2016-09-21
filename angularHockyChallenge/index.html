@@ -1,0 +1,149 @@
+<!-- 
+/**
+ * Hockey is the game. Make it happen.
+ *
+ * If you want to turn it into some other sport, have at it.
+ *
+ * Anyway, I have given you a basic HTML structure for a 
+ * BATTLE OF THE SPORTS GAME THING between these two rivals, and you
+ * should make the page do what it needs to do, using your knowledge
+ * of JS, HTML, CSS, and... sports.
+ *
+ * Here's what this 'game' should do:
+ * 
+ * 1. Clicking a "SHOOT" button attempt to score against the opposing team.
+ *   - shots have a random chance of succeeding or failing
+ *   - number of shots taken should increase every click on the "SHOOT" button
+ *   - number of hits obviously only increases when the shot is successful
+ * 
+ * 2. Clicking the "RESET" button resets all the shot and score counters and
+ * adds 1 to the number of resets
+ *
+ * 3. Any time a team shoots and scores change the background color of
+ *    page to that teams color
+ *
+ * OPTIONAL STUFF:
+ * - add logos of the two rivals below their name
+ * - make the page just look better
+ * - play a sound when someone clicks the "Shoot" button. You'll need to read about the <audio> element
+ *   and how to use it in JS. You will also need to download a sound bite
+ */ 
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JS Game Challenge</title>
+  <style type="text/css">
+    .hide {
+      display: none;
+    }
+    .left {
+      float: left;
+    }
+    .right {
+      float: right;
+    }
+    .clear {
+      clear: both;
+    }
+    .gold {
+      background-color: gold;
+    }
+    .purple {
+      background-color: purple;
+    }
+  </style>
+</head>
+<body ng-app="hockyApp">
+  <div style="width: 700px;margin: 0 auto;" ng-controller="gameCtrl" ng-class="{'gold' : BG1, 'purple' : BG2}">
+    <h1 style="margin-bottom:5px">Hockey, JavaScript, and jQuery oh My!</h1>
+    <h2 style="margin-top: 0">...the game!</h2>
+    <div style="margin: 0 auto;text-align:center">
+      <button ng-click="resetIncrease()">RESET</button><br>
+      NUMBER OF RESETS: <span>{{ resetCounter }}</span>
+    </div>
+    <div class="clear"></div>
+    <div class="left">
+      <h2>
+        Team 1
+      </h2>
+      <div class="hits">
+        SHOTS TAKEN: <span> {{team1Shots}} </span><br>
+        GOALS: <span> {{team1Goals}} </span>
+      </div>
+      <div>
+        <button ng-click="team1ShotIncrease()">SHOOT</button>
+      </div>
+    </div>
+    <div class="right">
+      <h2>
+        Team 2
+      </h2>
+      <div class="hits">
+        SHOTS TAKEN: <span> {{team2Shots}} </span><br>
+        GOALS: <span> {{team2Goals}} </span>
+      </div>
+      <div>
+        <button ng-click="team2ShotIncrease()">SHOOT</button>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+  <script type="text/javascript">
+  
+  // create angular application
+  var app = angular.module("hockyApp", []);
+
+  app.controller("gameCtrl", function($scope) {
+
+    $scope.team1Shots = 0;
+    $scope.team1Goals = 0;
+    $scope.team2Shots = 0;
+    $scope.team2Goals = 0;
+    $scope.resetCounter = 0;
+    $scope.BG1 = false;
+    $scope.BG2 = false;
+
+    $scope.team1ShotIncrease = function(){
+      $scope.BG1 = false;
+      $scope.BG2 = false;
+      $scope.team1Shots++;
+      var randomNumber = Math.floor((Math.random() * 100) + 1);
+      
+      if (randomNumber > 88){
+        $scope.team1Goals++;
+        $scope.BG1 = true;
+      }
+    }
+
+    $scope.team2ShotIncrease = function(){
+      $scope.BG1 = false;
+      $scope.BG2 = false;
+      $scope.team2Shots++;
+      var randomNumber = Math.floor((Math.random() * 100) + 1);
+      
+      if (randomNumber > 88){
+        $scope.team2Goals++;
+        $scope.BG2 = true;
+      }
+    }
+
+    $scope.resetIncrease = function(){
+      $scope.resetCounter++;
+      $scope.BG1 = false;
+      $scope.BG2 = false;
+      $scope.team1Shots = 0;
+      $scope.team1Goals = 0;
+      $scope.team2Shots = 0;
+      $scope.team2Goals = 0;
+    }
+
+  })
+
+  </script>
+
+</body>
+</html>

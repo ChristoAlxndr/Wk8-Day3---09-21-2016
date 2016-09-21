@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Angular Counter Example</title>
+<style type="text/css">
+	.red {
+		color:red;
+	}
+	.blue {
+		color: blue;
+	}
+</style>
+</head>
+<body ng-app="AngularCounter"how>
+
+
+<div ng-controller="CounterCtrl">
+	<button ng-click="decrease()">decrease</button>
+	<span ng-class="(aboveFive) ? 'red' : 'blue' "> {{ counter }} </span>
+	<button ng-click="increase()">increase</button>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script type="text/javascript">
+
+	var app = angular.module("AngularCounter", []);
+
+	app.controller("CounterCtrl", function($scope) {
+		$scope.counter = 0;
+		$scope.aboveFive = false;
+
+		$scope.decrease = function() {
+			if($scope.counter == 0) {
+				return false;
+			}
+			$scope.counter--
+
+			if($scope.counter < 5){
+				$scope.aboveFive = false;
+			}
+		}
+
+		$scope.increase = function() {
+			if($scope.counter == 10) {
+				return false;
+			}
+			$scope.counter++
+
+			if($scope.counter >= 5){
+				$scope.aboveFive = true;
+			}
+		}
+	})
+
+</script>
+</body>
+</html>
